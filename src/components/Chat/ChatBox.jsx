@@ -117,10 +117,6 @@ const ChatBox = () => {
     };
   });
 
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
-
   //Rendered Component
   const MessageRender = () => {
     if (isLoading)

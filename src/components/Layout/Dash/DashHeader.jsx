@@ -16,7 +16,7 @@ import NotificationList from "../../Notification/NotificationList";
 const DashHeader = () => {
   const { notifications } = useNotificationContext();
 
-  const { username, avatar } = useAuth();
+  const { avatar } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -33,10 +33,6 @@ const DashHeader = () => {
 
     drawer.classList.add("show");
   };
-
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
 
   return (
     <div className="dash__header">
