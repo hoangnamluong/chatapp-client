@@ -11,6 +11,8 @@ const ChatUsersAvatar = ({ users = [] }) => {
     if (!filter.length) return;
 
     setUsersInput(filter);
+
+    console.log(first)
   }, [users]);
 
   const Content = () => {
