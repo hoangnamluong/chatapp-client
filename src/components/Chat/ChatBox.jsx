@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useTypingContext from "../../hooks/useTypingContext";
 import useNotificationContext from "../../hooks/useNotificationContext";
-
+import filterLoggedUser from "../../utils/filterLoggedUser";
 import io from "socket.io-client";
 import { endpoints } from "../../app/api/axiosClient";
 import BouncingLoader from "../misc/BouncingLoader";
@@ -27,7 +27,7 @@ const ChatBox = () => {
   const { _id: userId } = useAuth();
 
   const chat = useSelector(selectChat);
-  const { _id, name, users } = chat ?? "";
+  const { _id, name, users, isGroupChat } = chat ?? "";
 
   const [messages, setMessages] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
@@ -140,6 +140,8 @@ const ChatBox = () => {
     }
   };
 
+  const filteredUser = filterLoggedUser(users);
+
   const renderContent = chat ? (
     <>
       <div className="chat-box__title">
@@ -151,7 +153,7 @@ const ChatBox = () => {
             <div className="d-flex justify-content-center mb-3">
               <ChatUsersAvatar users={users} />
             </div>
-            <h5>{name}</h5>
+            <h5>{isGroupChat ? name : filteredUser[0].username}</h5>
             <p>You're now connected</p>
           </div>
           <MessageRender />
