@@ -1,8 +1,7 @@
 import "./chat.scss";
 import ChatsList from "../../components/Chat/ChatsList";
 import UserSearchDrawer from "../../components/User/UserSearchDrawer";
-import GroupChatModal from "../../components/groupChat/GroupChatModal";
-import GroupForm from "../../components/groupChat/GroupForm";
+import GroupChatModal from "../../components/GroupChat/GroupChatModal";
 import ChatBox from "../../components/Chat/ChatBox";
 import ChatAction from "../../components/Chat/ChatAction";
 

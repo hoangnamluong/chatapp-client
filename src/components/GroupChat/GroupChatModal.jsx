@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import GroupForm from "./GroupForm";
+import { Modal } from "react-bootstrap";
 
 const GroupChatModal = ({
   children = null,
