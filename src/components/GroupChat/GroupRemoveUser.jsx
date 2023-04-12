@@ -47,8 +47,6 @@ const GroupRemoveUser = ({ handleClose = null, formArg }) => {
         usersIds: selectedItems,
       });
 
-      console.log(data);
-
       if (data) {
         toast.success("Remove Succeed");
         handleClose();

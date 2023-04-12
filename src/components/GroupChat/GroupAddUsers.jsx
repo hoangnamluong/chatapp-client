@@ -73,8 +73,6 @@ const GroupAddUsers = ({ handleClose = null, formArg }) => {
         _id: chatId,
       });
 
-      console.log(data);
-
       if (data) {
         toast.success("Add Succeed");
         handleClose();

@@ -95,8 +95,6 @@ const ChatBox = () => {
             payload: newMessage,
           });
         } else {
-          console.log("ddd");
-
           notificationDispatch({
             type: "CLEAR_NOTIFICATION",
             payload: newMessage.chat._id,
