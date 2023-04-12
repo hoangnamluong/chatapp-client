@@ -140,7 +140,7 @@ const ChatBox = () => {
     }
   };
 
-  const filteredUser = filterLoggedUser(users);
+  const filteredUser = filterLoggedUser(users ?? []);
 
   const renderContent = chat ? (
     <>
