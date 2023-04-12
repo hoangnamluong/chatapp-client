@@ -1,0 +1,12 @@
+@import "../../../assets/variables";
+.full-page__container {
+  position: relative;
+  min-height: 100dvh;
+
+  .full-page__inner {
+    position: relative;
+    min-height: 100dvh;
+    max-width: 80dvw;
+    margin: 0 auto;
+  }
+}

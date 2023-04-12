@@ -1,0 +1,55 @@
+@import "../../../assets/variables";
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: translateY(calc(+1 * 2px));
+    animation-timing-function: ease-in-out;
+  }
+  66% {
+    transform: translateY(calc(-1 * 2px));
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    transform: translateY(0px);
+    animation-timing-function: ease-in;
+  }
+}
+
+.footer {
+  .footer__inner {
+    min-height: 200px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-top: 2px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: $sans;
+    font-size: 1.1em;
+
+    .footer__contact {
+      text-align: center;
+
+      .footer__contact-icon {
+        display: flex;
+        gap: 20px;
+
+        a {
+          &:hover {
+            animation: bounce 0.6s infinite;
+          }
+
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}

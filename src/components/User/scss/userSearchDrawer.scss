@@ -1,0 +1,55 @@
+@import "../../../assets/variables";
+
+.drawer {
+  position: absolute;
+  background-color: #fff;
+  height: 100dvh;
+  width: 0;
+  z-index: 2;
+  overflow: hidden;
+  transition: $ease-in-out;
+  display: flex;
+  align-items: center;
+
+  &.show {
+    width: 400px;
+    transition: $ease-in-out;
+  }
+
+  .drawer__container {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+
+    .drawer__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .drawer__search-input {
+        position: relative;
+
+        svg {
+          position: absolute;
+          top: 50%;
+          transform: translate(0, -50%);
+          left: 5px;
+          font-size: 1.7em;
+          color: $secondary;
+        }
+
+        input {
+          background-color: #ddd;
+          flex: 1;
+          padding: 10px 20px 10px 40px;
+          border-radius: 10px;
+          border: none;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}

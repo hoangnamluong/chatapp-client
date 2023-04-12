@@ -1,0 +1,89 @@
+@import "../../../assets/variables";
+
+nav {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: $complementary;
+  z-index: 1;
+
+  &::before {
+    position: absolute;
+    content: "";
+    background-color: rgba($color: $complementary, $alpha: 0.4);
+    width: 95%;
+    height: 2px;
+    bottom: -7px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  h2 {
+    font-family: $sans;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 2em;
+    margin: 0;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    gap: 20px;
+    list-style-type: none;
+
+    li {
+      a {
+        position: relative;
+        padding: 10px 20px;
+
+        &::before {
+          position: absolute;
+          content: "";
+          height: 0;
+          border-radius: 10px;
+          background-color: $secondary;
+          bottom: 5px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          width: 80%;
+          transition: $ease-in-out;
+        }
+
+        &:hover::before {
+          height: 3px;
+          transition: $ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+.btn-on-scroll {
+  position: fixed;
+  z-index: 99;
+  top: -50px;
+  right: 10px;
+
+  &.show {
+    top: 10px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  nav {
+    position: fixed;
+    display: block;
+    // height: 100dvh;
+
+    ul {
+      flex-direction: column;
+    }
+  }
+}

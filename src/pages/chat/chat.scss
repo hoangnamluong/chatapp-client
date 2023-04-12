@@ -1,0 +1,37 @@
+@import "../../assets/variables";
+
+.chat {
+  position: relative;
+
+  .chat__inner {
+    position: absolute;
+    padding: 100px 30px 30px 30px;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    gap: 30px;
+    justify-content: space-around;
+
+    .chat__list {
+      position: relative;
+      flex: 1;
+      background-color: $complementary;
+      border-radius: 10px;
+      padding: 20px;
+
+      .list__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+      }
+
+      .list__conversations {
+        overflow-y: auto;
+        margin-top: 10px;
+        height: calc(100% - 80px);
+      }
+    }
+  }
+}

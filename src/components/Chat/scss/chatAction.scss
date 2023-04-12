@@ -1,0 +1,61 @@
+@import "../../../assets/variables";
+
+.chat__actions {
+  position: relative;
+  text-align: center;
+  flex: 1;
+  background-color: #e6f4f1;
+  border-radius: 10px;
+  padding: 10px;
+
+  .chat-actions__title {
+    position: relative;
+    padding-block: 12px;
+    margin-inline: 12px;
+    margin-block: 12px 24px;
+    border-bottom: 2px solid #ddd;
+
+    &:has(.avatar) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    & > h3 {
+      margin-top: 14px;
+    }
+  }
+
+  .chat-actions__items {
+    & > span {
+      cursor: pointer;
+      background-color: #eee;
+      display: flex;
+      padding: 20px;
+      text-align: left;
+      gap: 14px;
+
+      & > svg {
+        flex: 1;
+      }
+
+      & > p {
+        flex: 6;
+      }
+
+      &:hover {
+        background-color: #ddd;
+        border-radius: 14px;
+        color: #555;
+      }
+    }
+  }
+
+  .chat-actions__leave-group-button {
+    position: absolute;
+    width: 90%;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+}

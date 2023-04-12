@@ -1,0 +1,136 @@
+@import "../../../assets/variables";
+
+@keyframes shake {
+  0% {
+    transform: rotate(10deg);
+    animation-timing-function: ease-in;
+  }
+  33% {
+    transform: rotate(0deg);
+    animation-timing-function: ease-in-out;
+  }
+  66% {
+    transform: rotate(-10deg);
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    transform: rotate(0deg);
+    animation-timing-function: ease-out;
+  }
+}
+
+.dash {
+  .dash__header {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    background-color: #fff;
+
+    .header__inner {
+      position: relative;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+
+      .header__items {
+        display: flex;
+        gap: 50px;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+          color: #555;
+          margin: 0;
+          font-size: 30px;
+        }
+      }
+
+      .header__user-info {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: $complementary;
+        color: #555;
+        border-radius: 10px;
+        gap: 20px;
+
+        .header__notification {
+          position: relative;
+
+          svg {
+            cursor: pointer;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+
+          .notification__count {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            color: #fff;
+            z-index: 1;
+
+            &::before {
+              position: absolute;
+              content: "";
+              width: 25px;
+              height: 25px;
+              background-color: red;
+              border-radius: 50%;
+              z-index: -1;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+
+        .header__user-detail {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          &:hover {
+            .avatar {
+              animation: shake 0.2s forwards;
+            }
+          }
+
+          p {
+            margin: 0;
+            font-size: 1.1em;
+          }
+
+          &::after {
+            display: block;
+            position: absolute;
+            cursor: pointer;
+            content: "";
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            top: 0;
+            left: 0;
+          }
+        }
+
+        .header__sub-item {
+          width: 150px;
+          height: auto;
+          position: absolute;
+          bottom: -55px;
+          right: 0;
+          z-index: 1;
+          border: none;
+          background-color: $complementary;
+          border: 2px solid $secondary;
+          color: $secondary;
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}

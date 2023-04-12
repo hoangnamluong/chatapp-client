@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto&display=swap");
+@import "./assets/variables";
+
+body {
+  font-family: $poppins;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 1.1em;
+  color: #777;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $sans;
+  font-weight: bold;
+  margin: 0;
+}
+
+p {
+  font-weight: 300;
+  margin: 0;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+
+  &:hover {
+    color: unset;
+  }
+}
+
+button {
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 10px 12px;
+  transition: $ease-in-out;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+
+  &:hover {
+    transform: scale(1.05);
+    transition: $ease-in-out;
+  }
+
+  &:is(:disabled) {
+    opacity: 0.5;
+  }
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.custom-container {
+  position: relative;
+  min-height: 100dvh;
+  margin: 0 auto;
+}
+
+.background-gradient {
+  background: rgb(68, 145, 214);
+  background: linear-gradient(
+    307deg,
+    rgba(68, 145, 214, 1) 0%,
+    rgba(0, 185, 232, 1) 64%,
+    rgba(0, 220, 223, 1) 100%
+  );
+}
+
+.disable-select {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.background-secondary-gradient {
+  background: rgb(223, 159, 31);
+  background: linear-gradient(
+    90deg,
+    rgba(223, 159, 31, 1) 0%,
+    rgba(218, 168, 57, 1) 63%,
+    rgba(217, 173, 96, 1) 100%
+  );
+}
+
+.primary-btn {
+  color: $complementary;
+  background-color: $primary;
+  border: none;
+}
+
+.primary-outlined-btn {
+  border: 2px solid $primary;
+  color: $primary;
+}
+
+.secondary-btn {
+  color: $complementary;
+  background-color: $secondary;
+  border: none;
+}
+
+.secondary-outlined-btn {
+  border: 2px solid $secondary;
+  color: $secondary;
+}
+
+.error-btn {
+  background-color: red;
+  color: $complementary;
+  border: none;
+}
+
+.modal-btn {
+  display: block;
+  margin: 0 0 0 auto;
+}
+
+.multiple-avatars {
+  position: relative;
+
+  & > div:first-child {
+    position: absolute;
+    top: 5px;
+    z-index: 1;
+    left: -10px;
+  }
+}
+
+.vertical-content-center {
+  display: flex;
+  align-content: center;
+}
+
+.vertical-items-center {
+  display: flex;
+  align-items: center;
+}
+
+.error-input {
+  border: 1px solid red;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $secondary;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #ccc;
+}

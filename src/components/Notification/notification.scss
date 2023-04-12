@@ -1,0 +1,54 @@
+@import "../../assets/variables";
+
+.notification__list {
+  position: absolute;
+  top: 40px;
+  left: calc(0px - 270px);
+  background-color: $primary-sub;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 99;
+
+  &:has(.no-notification) {
+    left: calc(0px - 230px);
+    width: 260px;
+  }
+
+  ul {
+    color: $complementary;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      cursor: pointer;
+      position: relative;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: $primary;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      font-size: 0.9em;
+      gap: 20px;
+
+      & > div {
+        flex: 1;
+      }
+
+      & > p {
+        flex: 5;
+      }
+
+      &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        z-index: 99;
+        top: 0;
+        left: 0;
+      }
+    }
+  }
+}

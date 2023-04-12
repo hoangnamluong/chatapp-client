@@ -1,0 +1,64 @@
+@import "../../../assets/variables";
+
+.users-list {
+  list-style-type: none;
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding: 0;
+
+  li {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  .user-item__bone {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+
+    .bone__avatar {
+      width: 40px;
+      height: 40px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+
+    .bone__content {
+      width: 70%;
+      height: 100%;
+
+      h5 {
+        width: 50%;
+        height: 26px;
+        border-radius: 10px;
+        background-color: #ccc;
+        margin-bottom: 10px;
+      }
+
+      p {
+        width: 100%;
+        height: 20px;
+        border-radius: 8px;
+        background-color: #ccc;
+      }
+    }
+
+    &:hover {
+      cursor: auto;
+      background-color: #fff;
+    }
+  }
+}

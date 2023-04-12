@@ -1,0 +1,33 @@
+.group-form {
+  .input-container {
+    margin-top: 0;
+    background-color: #ddd;
+    border-radius: 10px;
+  }
+
+  .users-in-group {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+
+    li {
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      svg {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        border-radius: 50%;
+        background-color: red;
+        color: #fff;
+        font-size: 0.8em;
+      }
+    }
+  }
+}
