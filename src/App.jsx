@@ -33,8 +33,8 @@ function App() {
         </Route>
 
         {/* Private */}
-        <Route element={<RequiredAuth />}>
-          <Route element={<PersistsLogin />}>
+        <Route element={<PersistsLogin />}>
+          <Route element={<RequiredAuth />}>
             <Route element={<Prefetch />}>
               <Route path="dash" element={<DashLayout />}>
                 <Route index element={<Chat />} />
