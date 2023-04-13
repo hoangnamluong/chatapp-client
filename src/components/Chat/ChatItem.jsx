@@ -30,7 +30,7 @@ const ChatItem = ({ chatId }) => {
       <div className="chats-item__inner" onClick={handleChatClick}>
         <ChatUsersAvatar users={users} />
         <div className="disable-select">
-          <h5>{isGroupChat ? name : filteredUser[0].username}</h5>
+          <h5>{isGroupChat ? name : filteredUser[0]?.username}</h5>
           <p>{latest ? latest.content : "No latest Message"}</p>
         </div>
       </div>

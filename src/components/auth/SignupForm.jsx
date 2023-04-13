@@ -42,6 +42,7 @@ const SignupForm = () => {
           setImage(data.url.toString());
         })
         .catch((err) => {
+          toast.error("Upload Image Failed");
           console.log(err);
         })
         .finally(() => {

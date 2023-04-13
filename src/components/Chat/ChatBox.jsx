@@ -151,7 +151,7 @@ const ChatBox = () => {
             <div className="d-flex justify-content-center mb-3">
               <ChatUsersAvatar users={users} />
             </div>
-            <h5>{isGroupChat ? name : filteredUser[0].username}</h5>
+            <h5>{isGroupChat ? name : filteredUser[0]?.username}</h5>
             <p>You're now connected</p>
           </div>
           <MessageRender />
