@@ -59,13 +59,6 @@ const GroupRemoveUser = ({ handleClose = null, formArg }) => {
 
   return (
     <>
-      {users.length <= 3 ? (
-        <p className="mb-3 text-danger">
-          Required more than 2 members to remove
-        </p>
-      ) : (
-        <></>
-      )}
       <div className="remove-user__list">
         {filteredUsers.map((user) => (
           <div className="remove-user__item" key={user._id}>
@@ -83,11 +76,8 @@ const GroupRemoveUser = ({ handleClose = null, formArg }) => {
           </div>
         ))}
       </div>
-      <button
-        disabled={users.length <= 3}
-        className="error-btn modal-btn mt-3"
-        onClick={handleRemoveUser}
-      >
+      {users.length === 1 && <p>No members left in this group</p>}
+      <button className="error-btn modal-btn mt-3" onClick={handleRemoveUser}>
         Finish
       </button>
     </>

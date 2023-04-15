@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setChat } from "../../features/chat/chatSlice";
 import ChatUsersAvatar from "../GroupChat/ChatUsersAvatar";
 import filterLoggedUser from "../../utils/filterLoggedUser";
+import Avatar from "../User/Avatar";
 
 const ChatItem = ({ chatId }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const ChatItem = ({ chatId }) => {
     }),
   });
 
-  const { _id, users, latest, name, isGroupChat } = chat;
+  const { admin, users, latest, name, isGroupChat } = chat;
 
   const handleChatClick = (e) => {
     dispatch(setChat(chat));
@@ -28,7 +29,8 @@ const ChatItem = ({ chatId }) => {
   return (
     <li className="chats-item">
       <div className="chats-item__inner" onClick={handleChatClick}>
-        <ChatUsersAvatar users={users} />
+        {users.length > 1 && <ChatUsersAvatar users={users} />}
+        {admin && users.length === 1 && <Avatar src={admin.avatar} />}
         <div className="disable-select">
           <h5>{isGroupChat ? name : filteredUser[0]?.username}</h5>
           <p>{latest ? latest.content : "No latest Message"}</p>

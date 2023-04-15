@@ -1,4 +1,5 @@
 import apiSlice from "../../app/api/apiSlice";
+import { clearChat } from "../chat/chatSlice";
 import { logout, setCredentials } from "./authSlice";
 
 const authApiSlice = apiSlice.injectEndpoints({
@@ -78,6 +79,7 @@ const authApiSlice = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(logout());
+          dispatch(clearChat());
 
           setTimeout(() => {
             dispatch(apiSlice.util.resetApiState());

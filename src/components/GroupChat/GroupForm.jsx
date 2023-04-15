@@ -122,7 +122,7 @@ const GroupForm = ({ handleClose = null }) => {
         data={selectedUsers}
         setData={setSelectedUsers}
       />
-      <button className="secondary-btn modal-btn">Create Chat</button>
+      <button className="secondary-btn modal-btn">Create Group</button>
     </form>
   );
 };

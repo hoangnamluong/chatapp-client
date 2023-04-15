@@ -17,24 +17,30 @@ const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (message) {
-      const { status, data } = await axiosClient.post(
-        endpoints.message,
-        {
-          chatId,
-          content: message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+    setMessage(message.trim());
 
-      if (status === 201) {
-        setData((prev) => [...prev, data]);
-        socket.emit("new message", data);
+    const messageSpaceOnly = message.replace(/\s/g, "").length;
+
+    if (!message || !messageSpaceOnly) {
+      return;
+    }
+
+    const { status, data } = await axiosClient.post(
+      endpoints.message,
+      {
+        chatId,
+        content: message,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
+    );
+
+    if (status === 201) {
+      setData((prev) => [...prev, data]);
+      socket.emit("new message", data);
     }
 
     setMessage("");

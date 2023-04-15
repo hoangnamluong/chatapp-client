@@ -15,6 +15,7 @@ import filterLoggedUser from "../../utils/filterLoggedUser";
 import io from "socket.io-client";
 import { endpoints } from "../../app/api/axiosClient";
 import BouncingLoader from "../misc/BouncingLoader";
+import Avatar from "../User/Avatar";
 
 let socket = null;
 let selectedChatCompare = null;
@@ -27,7 +28,7 @@ const ChatBox = () => {
   const { _id: userId } = useAuth();
 
   const chat = useSelector(selectChat);
-  const { _id, name, users, isGroupChat } = chat ?? "";
+  const { _id, name, users, isGroupChat, admin } = chat ?? "";
 
   const [messages, setMessages] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
@@ -149,7 +150,8 @@ const ChatBox = () => {
         <div className="chat-box__inner">
           <div className="text-center chat-box__sub-title">
             <div className="d-flex justify-content-center mb-3">
-              <ChatUsersAvatar users={users} />
+              {users.length > 1 && <ChatUsersAvatar users={users} />}
+              {admin && users.length === 1 && <Avatar src={admin.avatar} />}
             </div>
             <h5>{isGroupChat ? name : filteredUser[0]?.username}</h5>
             <p>You're now connected</p>

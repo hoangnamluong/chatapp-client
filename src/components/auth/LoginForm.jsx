@@ -15,6 +15,9 @@ import "./authForm.scss";
 //misc
 import { toast } from "react-toastify";
 
+const ACCENTED_LETTER_REGEX =
+  /^[ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/g;
+
 const LoginForm = () => {
   const navigate = useNavigate();
 
@@ -26,13 +29,23 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const containsAccentedLetters =
+      ACCENTED_LETTER_REGEX.test(usernameRef.current.value) ||
+      ACCENTED_LETTER_REGEX.test(passwordRef.current.value);
+
+    if (containsAccentedLetters) {
+      toast.warning("Username or Password is containing Accented Letters");
+      return;
+    }
+
     await login({
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     });
+  };
 
-    usernameRef.current.value = "";
-    passwordRef.current.value = "";
+  const spaceDisAllowed = (e) => {
+    if (e.code === "Space") e.preventDefault();
   };
 
   useEffect(() => {
@@ -46,6 +59,8 @@ const LoginForm = () => {
     }
     if (isError) {
       toast.dismiss("loading");
+      usernameRef.current.value = "";
+
       toast.error("Username or password is incorrect");
     }
   }, [isLoading, isSuccess, isError]);
@@ -59,6 +74,9 @@ const LoginForm = () => {
           type="text"
           name="username"
           ref={usernameRef}
+          onKeyDown={(e) => {
+            spaceDisAllowed(e);
+          }}
           required
           placeholder="Username"
         />
@@ -69,6 +87,9 @@ const LoginForm = () => {
           type="password"
           name="password"
           ref={passwordRef}
+          onKeyDown={(e) => {
+            spaceDisAllowed(e);
+          }}
           required
           placeholder="Password"
         />

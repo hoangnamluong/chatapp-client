@@ -5,6 +5,7 @@ import ChatUsersAvatar from "../GroupChat/ChatUsersAvatar";
 import "./scss/chatAction.scss";
 import { useLeaveGroupMutation } from "../../features/chat/chatApiSlice";
 import { toast } from "react-toastify";
+import Avatar from "../User/Avatar";
 
 const ChatAction = () => {
   const chat = useSelector(selectChat);
@@ -32,7 +33,10 @@ const ChatAction = () => {
     chat && (
       <div className="chat__actions">
         <div className="chat-actions__title">
-          <ChatUsersAvatar users={chat?.users} />
+          {chat.users.length > 1 && <ChatUsersAvatar users={chat.users} />}
+          {chat.admin && chat.users.length === 1 && (
+            <Avatar src={chat.admin.avatar} />
+          )}
           <h3>{chat?.name}</h3>
         </div>
         <div className="chat-actions__items">

@@ -6,6 +6,24 @@ import { useNavigate } from "react-router-dom";
 import "./authForm.scss";
 import { toast } from "react-toastify";
 import { useSignupMutation } from "../../features/auth/authApiSlice";
+import removeAccented from "../../utils/removeAccented";
+import { OverlayTrigger, Popover } from "react-bootstrap";
+import { REGEX } from "../../data/regex";
+
+const { ACCENTED_LETTER_REGEX, STRONG_PASSWORD } = REGEX;
+
+const popover = (
+  <Popover id="popover-basic">
+    <Popover.Header as="h2">Password Requirements:</Popover.Header>
+    <Popover.Body>
+      <div>Must contain a letter</div>
+      <div>Must contain an uppercase letter</div>
+      <div>Must contain a number</div>
+      <div>Must contain a special letter</div>
+      <div>At least 8 characters long</div>
+    </Popover.Body>
+  </Popover>
+);
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -13,6 +31,7 @@ const SignupForm = () => {
   const [signup, { isLoading, isSuccess, isError, error }] =
     useSignupMutation();
 
+  const imageRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -62,15 +81,42 @@ const SignupForm = () => {
       return;
     }
 
-    await signup({
+    const containsAccentedLetters =
+      ACCENTED_LETTER_REGEX.test(usernameRef.current.value) ||
+      ACCENTED_LETTER_REGEX.test(passwordRef.current.value);
+
+    if (containsAccentedLetters) {
+      toast.warning("Username or Password is containing Accented Letters");
+      return;
+    }
+
+    if (!STRONG_PASSWORD.test(passwordRef.current.value)) {
+      toast.info("Password does not meet the Requirements");
+      return;
+    }
+
+    let body = {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
-      avatar: image,
-    });
+    };
 
+    if (image) {
+      body = {
+        ...body,
+        avatar: image,
+      };
+    }
+
+    await signup(body);
+
+    imageRef.current.value = "";
     usernameRef.current.value = "";
     passwordRef.current.value = "";
     confirmPasswordRef.current.value = "";
+  };
+
+  const spaceDisAllowed = (e) => {
+    if (e.code === "Space") e.preventDefault();
   };
 
   useEffect(() => {
@@ -84,7 +130,7 @@ const SignupForm = () => {
     }
     if (isError) {
       toast.dismiss("loading");
-      toast.error("Signup failed");
+      toast.error(error.data.message);
     }
   }, [isLoading, isSuccess, isError]);
 
@@ -97,20 +143,28 @@ const SignupForm = () => {
           type="text"
           name="username"
           ref={usernameRef}
+          onKeyDown={(e) => {
+            spaceDisAllowed(e);
+          }}
           required
           placeholder="Username"
         />
       </div>
-      <div className="input-container">
-        <LockIcon />
-        <input
-          type="password"
-          name="password"
-          ref={passwordRef}
-          required
-          placeholder="Password"
-        />
-      </div>
+      <OverlayTrigger trigger="focus" placement="top-start" overlay={popover}>
+        <div className="input-container">
+          <LockIcon />
+          <input
+            type="password"
+            name="password"
+            ref={passwordRef}
+            onKeyDown={(e) => {
+              spaceDisAllowed(e);
+            }}
+            required
+            placeholder="Password"
+          />
+        </div>
+      </OverlayTrigger>
       <div className="input-container">
         <LockIcon />
         <input
@@ -127,7 +181,7 @@ const SignupForm = () => {
           type="file"
           name="image"
           accept="image/*"
-          required
+          ref={imageRef}
           onChange={(e) => postImage(e.target.files[0])}
         />
       </div>
