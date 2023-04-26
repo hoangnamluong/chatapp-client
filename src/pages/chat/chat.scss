@@ -35,3 +35,11 @@
     }
   }
 }
+
+@media screen and (max-width: 414px) {
+  .chat {
+    .chat__inner {
+      padding: 100px 0 0 0;
+    }
+  }
+}
