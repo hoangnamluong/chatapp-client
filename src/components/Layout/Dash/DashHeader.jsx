@@ -50,7 +50,7 @@ const DashHeader = () => {
           <SearchIcon />
         </button>
         <div className="header__items">
-          <h1>Chat App</h1>
+          <h2>Chat App</h2>
         </div>
         <div className="header__user-info">
           <div className="header__notification">

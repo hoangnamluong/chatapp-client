@@ -11,12 +11,16 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
+    gap: 15px;
+    padding: 10px;
     border-radius: 10px;
 
+    h5 {
+      color: #555;
+    }
+
     &:hover {
-      background-color: #ccc;
+      background-color: #ddd;
     }
   }
 

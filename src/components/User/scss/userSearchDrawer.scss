@@ -12,7 +12,7 @@
   align-items: center;
 
   &.show {
-    width: 400px;
+    width: 350px;
     transition: $ease-in-out;
   }
 
@@ -23,7 +23,7 @@
 
     .drawer__header {
       display: flex;
-      gap: 1dvw;
+      justify-content: space-between;
       align-items: center;
 
       .drawer__search-input {
@@ -40,7 +40,7 @@
 
         input {
           background-color: #ddd;
-          width: 270px;
+          width: 250px;
           padding: 10px 20px 10px 40px;
           border-radius: 10px;
           border: none;

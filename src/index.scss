@@ -32,6 +32,7 @@ h6 {
   font-family: $sans;
   font-weight: bold;
   margin: 0;
+  color: #333;
 }
 
 p {
@@ -81,6 +82,7 @@ button {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  border: 1px solid #999;
 }
 
 .custom-container {

@@ -30,10 +30,11 @@
       padding: 10px;
       flex: 1;
 
-      .loader {
-      }
-
       .chat-box__sub-title {
+        h5 {
+          color: #555;
+        }
+
         p {
           font-family: "Poppins", sans-serif;
           color: #777;
