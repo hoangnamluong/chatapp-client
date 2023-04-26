@@ -1,6 +1,6 @@
 import "./scss/chatForm.scss";
 import { memo, useEffect, useState } from "react";
-import SendIcon from "@mui/icons-material/Send";
+import SendIcon from "../../assets/svg/send.svg";
 import axiosClient from "../../app/api/axiosClient";
 import { endpoints } from "../../app/api/axiosClient";
 import { useSelector } from "react-redux";
@@ -83,7 +83,7 @@ const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
           onChange={onChangedMessage}
         />
         <button>
-          <SendIcon />
+          <img src={SendIcon} width={30} height={30} />
         </button>
       </div>
     </form>

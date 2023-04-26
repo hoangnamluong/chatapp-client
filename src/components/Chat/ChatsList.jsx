@@ -1,10 +1,18 @@
 import "./scss/chatsList.scss";
 import { toast } from "react-toastify";
-import { useGetAllChatsQuery } from "../../features/chat/chatApiSlice";
 
 import ChatItem from "./ChatItem";
+import GroupChatModal from "../GroupChat/GroupChatModal";
+import GroupForm from "../GroupChat/GroupForm";
+
+import { useMediaQuery } from "react-responsive";
+import { useSelector } from "react-redux";
+import { selectChat } from "../../features/chat/chatSlice";
+import { useGetAllChatsQuery } from "../../features/chat/chatApiSlice";
 
 const ChatList = () => {
+  const chat = useSelector(selectChat);
+
   const {
     data: chats,
     isLoading,
@@ -15,6 +23,9 @@ const ChatList = () => {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
+
+  const mobileScreen = useMediaQuery({ query: "(max-width: 1224px)" });
+  const pcScreen = useMediaQuery({ query: "(min-width: 1224px)" });
 
   const Content = () => {
     if (isLoading)
@@ -46,9 +57,21 @@ const ChatList = () => {
   };
 
   return (
-    <ul className="chats-list">
-      <Content />
-    </ul>
+    (pcScreen || (mobileScreen && !chat)) && (
+      <div className="chat__list">
+        <div className="list__title">
+          <h3>My Chats</h3>
+          <GroupChatModal title="Create Group Chat" Form={GroupForm}>
+            <p style={{ cursor: "pointer" }}>New Group +</p>
+          </GroupChatModal>
+        </div>
+        <div className="list__conversations">
+          <ul className="chats-list">
+            <Content />
+          </ul>
+        </div>
+      </div>
+    )
   );
 };
 export default ChatList;

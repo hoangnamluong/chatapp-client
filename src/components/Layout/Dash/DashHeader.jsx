@@ -37,8 +37,17 @@ const DashHeader = () => {
   return (
     <div className="dash__header">
       <div className="header__inner">
-        <button className="secondary-btn" onClick={handleClickOpenDrawer}>
+        <button
+          className="secondary-btn big-btn"
+          onClick={handleClickOpenDrawer}
+        >
           <SearchIcon /> Search For a Friend
+        </button>
+        <button
+          className="secondary-btn small-btn"
+          onClick={handleClickOpenDrawer}
+        >
+          <SearchIcon />
         </button>
         <div className="header__items">
           <h1>Chat App</h1>

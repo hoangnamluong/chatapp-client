@@ -1,37 +1,56 @@
+import "./scss/chatBox.scss";
+
+import InfoIcon from "../../assets/svg/info.svg";
+import BackIcon from "../../assets/svg/back.svg";
+
 import ChatUsersAvatar from "../GroupChat/ChatUsersAvatar";
 import ChatForm from "../../components/Chat/ChatForm";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useSelector } from "react-redux";
-import { selectChat } from "../../features/chat/chatSlice";
-import "./scss/chatBox.scss";
 import Messages from "../Message/MessageItem";
 import useAxios from "../../hooks/useAxios";
 import { Spinner } from "react-bootstrap";
+import BouncingLoader from "../misc/BouncingLoader";
+import Avatar from "../User/Avatar";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearChat,
+  selectChat,
+  selectIsOpen,
+  toggleAction,
+} from "../../features/chat/chatSlice";
+
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useTypingContext from "../../hooks/useTypingContext";
 import useNotificationContext from "../../hooks/useNotificationContext";
-import filterLoggedUser from "../../utils/filterLoggedUser";
+
 import io from "socket.io-client";
 import { endpoints } from "../../app/api/axiosClient";
-import BouncingLoader from "../misc/BouncingLoader";
-import Avatar from "../User/Avatar";
+
+import filterLoggedUser from "../../utils/filterLoggedUser";
+import { useMediaQuery } from "react-responsive";
 
 let socket = null;
 let selectedChatCompare = null;
 
 const ChatBox = () => {
-  const { typing, isTyping, dispatch: typingDispatch } = useTypingContext();
+  const dispatch = useDispatch();
+
+  const { isTyping, dispatch: typingDispatch } = useTypingContext();
   const { notifications, dispatch: notificationDispatch } =
     useNotificationContext();
 
   const { _id: userId } = useAuth();
 
+  const isOpen = useSelector(selectIsOpen);
   const chat = useSelector(selectChat);
   const { _id, name, users, isGroupChat, admin } = chat ?? "";
 
   const [messages, setMessages] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
+
+  const mobileScreen = useMediaQuery({ query: "(max-width: 1224px)" });
+  const pcScreen = useMediaQuery({ query: "(min-width: 1224px)" });
 
   const { data, isLoading, isSuccess, isError, error } = useAxios({
     url: endpoints.message + `/${_id}`,
@@ -40,6 +59,15 @@ const ChatBox = () => {
 
   //Event Handler
   const onChangedSocketConnected = (e) => setSocketConnected((prev) => !prev);
+
+  const handleInfoClick = () => {
+    dispatch(toggleAction());
+  };
+
+  const handleRemoveSelectedChat = () => {
+    dispatch(clearChat());
+    selectedChatCompare = null;
+  };
 
   //usEffect
   useEffect(() => {
@@ -144,7 +172,23 @@ const ChatBox = () => {
   const renderContent = chat ? (
     <>
       <div className="chat-box__title">
-        <h4>{name ?? ""}</h4>
+        <div className="d-flex gap-3">
+          <img
+            src={BackIcon}
+            width={30}
+            height={30}
+            onClick={handleRemoveSelectedChat}
+            className="cursor-pointer"
+          />
+          <h4>{name ?? ""}</h4>
+        </div>
+        <img
+          src={InfoIcon}
+          width={30}
+          height={30}
+          onClick={handleInfoClick}
+          className="cursor-pointer"
+        />
       </div>
       <div className="chat-box__messages">
         <div className="chat-box__inner">
@@ -179,6 +223,10 @@ const ChatBox = () => {
     </h1>
   );
 
-  return <div className="chat-box">{renderContent}</div>;
+  return (
+    (pcScreen || (mobileScreen && chat && !isOpen)) && (
+      <div className="chat-box">{renderContent}</div>
+    )
+  );
 };
 export default ChatBox;

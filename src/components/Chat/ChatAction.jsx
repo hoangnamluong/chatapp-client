@@ -1,14 +1,25 @@
-import { useSelector } from "react-redux";
-import GroupChatActions from "../GroupChat/GroupChatActions";
-import { selectChat } from "../../features/chat/chatSlice";
-import ChatUsersAvatar from "../GroupChat/ChatUsersAvatar";
 import "./scss/chatAction.scss";
-import { useLeaveGroupMutation } from "../../features/chat/chatApiSlice";
-import { toast } from "react-toastify";
+
+import GroupChatActions from "../GroupChat/GroupChatActions";
+import ChatUsersAvatar from "../GroupChat/ChatUsersAvatar";
 import Avatar from "../User/Avatar";
 
+import BackIcon from "../../assets/svg/back.svg";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectChat,
+  selectIsOpen,
+  toggleAction,
+} from "../../features/chat/chatSlice";
+import { useLeaveGroupMutation } from "../../features/chat/chatApiSlice";
+import { toast } from "react-toastify";
+
 const ChatAction = () => {
+  const dispatch = useDispatch();
+
   const chat = useSelector(selectChat);
+  const isOpen = useSelector(selectIsOpen);
 
   const [leaveGroup] = useLeaveGroupMutation();
 
@@ -29,10 +40,22 @@ const ChatAction = () => {
     }
   };
 
+  const handleRemoveSelectedChat = () => {
+    dispatch(toggleAction());
+  };
+
   return (
+    isOpen &&
     chat && (
       <div className="chat__actions">
         <div className="chat-actions__title">
+          <img
+            src={BackIcon}
+            width={30}
+            height={30}
+            onClick={handleRemoveSelectedChat}
+            className="position-absolute start-0 cursor-pointer"
+          />
           {chat.users.length > 1 && <ChatUsersAvatar users={chat.users} />}
           {chat.admin && chat.users.length === 1 && (
             <Avatar src={chat.admin.avatar} />

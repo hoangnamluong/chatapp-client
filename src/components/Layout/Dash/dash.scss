@@ -133,3 +133,29 @@
     }
   }
 }
+
+@media screen and (max-width: "500px") {
+  .dash__header {
+    .header__inner {
+      .big-btn {
+        display: none;
+      }
+      .small-btn {
+        display: block;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: "500px") {
+  .dash__header {
+    .header__inner {
+      .big-btn {
+        display: block;
+      }
+      .small-btn {
+        display: none;
+      }
+    }
+  }
+}
