@@ -53,3 +53,19 @@
     }
   }
 }
+
+@media screen and (max-width: 330px) {
+  .drawer {
+    .drawer__container {
+      .drawer__header {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: start;
+
+        .close-icon {
+          margin: 10px;
+        }
+      }
+    }
+  }
+}

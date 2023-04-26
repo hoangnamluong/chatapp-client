@@ -26,7 +26,7 @@ const UserSearchDrawer = () => {
             data={query}
             setData={setQuery}
           />
-          <span onClick={handleClickCloseDrawer}>
+          <span onClick={handleClickCloseDrawer} className="close-icon">
             <CloseIcon />
           </span>
         </div>
