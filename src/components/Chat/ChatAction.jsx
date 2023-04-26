@@ -14,6 +14,7 @@ import {
 } from "../../features/chat/chatSlice";
 import { useLeaveGroupMutation } from "../../features/chat/chatApiSlice";
 import { toast } from "react-toastify";
+import { Spinner } from "react-bootstrap";
 
 const ChatAction = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ChatAction = () => {
   const chat = useSelector(selectChat);
   const isOpen = useSelector(selectIsOpen);
 
-  const [leaveGroup] = useLeaveGroupMutation();
+  const [leaveGroup, { isLoading }] = useLeaveGroupMutation();
 
   const handleLeaveGroup = async (e) => {
     if (!confirm(`Do you really want to leave ${chat.name}`)) return;
@@ -69,8 +70,13 @@ const ChatAction = () => {
               <button
                 className="chat-actions__leave-group-button error-btn"
                 onClick={handleLeaveGroup}
+                disabled={isLoading}
               >
-                Leave Group
+                {isLoading ? (
+                  <Spinner style={{ width: "20px", height: "20px" }} />
+                ) : (
+                  "Leave Group"
+                )}
               </button>
             </>
           )}

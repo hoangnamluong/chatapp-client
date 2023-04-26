@@ -2,7 +2,9 @@
 
 .message-form {
   .input-container {
-    background-color: #eee;
+    display: grid;
+    grid-template-columns: auto 50px;
+    background-color: #ddd;
     border-radius: 12px;
 
     input {
@@ -11,12 +13,13 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    button {
+    span {
+      cursor: pointer;
       display: flex;
       padding: 10px;
       border: none;
       background-color: transparent;
-      color: $primary;
+      color: #333;
 
       svg {
         margin: 0;

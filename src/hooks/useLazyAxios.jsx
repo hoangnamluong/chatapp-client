@@ -10,7 +10,7 @@ const useLazyAxios = ({ url, method, options = {} }) => {
   const access_token = useSelector(selectAccessToken);
 
   const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState("");

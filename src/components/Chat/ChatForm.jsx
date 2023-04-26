@@ -6,16 +6,25 @@ import { endpoints } from "../../app/api/axiosClient";
 import { useSelector } from "react-redux";
 import { selectAccessToken } from "../../features/auth/authSlice";
 import useTypingContext from "../../hooks/useTypingContext";
+import useLazyAxios from "../../hooks/useLazyAxios";
+import { Spinner } from "react-bootstrap";
 
 const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
   const accessToken = useSelector(selectAccessToken);
 
   const { typing, isTyping, dispatch } = useTypingContext();
 
+  const [fetch, { data, isLoading, isSuccess, isError, error }] = useLazyAxios({
+    url: endpoints.message,
+    method: "post",
+  });
+
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (isLoading) return;
 
     setMessage(message.trim());
 
@@ -25,26 +34,20 @@ const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
       return;
     }
 
-    const { status, data } = await axiosClient.post(
-      endpoints.message,
-      {
-        chatId,
-        content: message,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-
-    if (status === 201) {
-      setData((prev) => [...prev, data]);
-      socket.emit("new message", data);
-    }
+    fetch({
+      chatId,
+      content: message,
+    });
 
     setMessage("");
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setData((prev) => [...prev, data]);
+      socket.emit("new message", data);
+    }
+  }, [isSuccess]);
 
   useEffect(() => {
     if (chatId !== selectedChat) setMessage("");
@@ -82,9 +85,13 @@ const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
           value={message}
           onChange={onChangedMessage}
         />
-        <button>
-          <img src={SendIcon} width={30} height={30} />
-        </button>
+        <span onClick={handleSubmit}>
+          {isLoading ? (
+            <Spinner style={{ width: "30px", height: "30px" }} />
+          ) : (
+            <img src={SendIcon} width={30} height={30} />
+          )}
+        </span>
       </div>
     </form>
   );

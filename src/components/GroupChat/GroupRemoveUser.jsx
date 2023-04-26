@@ -5,13 +5,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useRemoveUserFromGroupMutation } from "../../features/chat/chatApiSlice";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { Spinner } from "react-bootstrap";
 
 const GroupRemoveUser = ({ handleClose = null, formArg }) => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const { chatId, users } = formArg;
 
-  const [removeUserFromGroup] = useRemoveUserFromGroupMutation();
+  const [removeUserFromGroup, { isLoading }] = useRemoveUserFromGroupMutation();
 
   const filteredUsers = filterLoggedUser(users);
 
@@ -77,8 +78,16 @@ const GroupRemoveUser = ({ handleClose = null, formArg }) => {
         ))}
       </div>
       {users.length === 1 && <p>No members left in this group</p>}
-      <button className="error-btn modal-btn mt-3" onClick={handleRemoveUser}>
-        Finish
+      <button
+        className="secondary-btn modal-btn mt-3"
+        disabled={isLoading}
+        onClick={handleRemoveUser}
+      >
+        {isLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          "SAVE CHANGES"
+        )}
       </button>
     </>
   );

@@ -15,6 +15,8 @@ const UsersList = ({ query }) => {
   useEffect(() => {
     if (query) {
       fetch({ kw: query });
+    } else {
+      fetch({ kw: "a" });
     }
   }, [query]);
 

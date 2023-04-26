@@ -6,6 +6,7 @@ import MultiSelect from "../misc/MultiSelect";
 import "./scss/groupForm.scss";
 import { toast } from "react-toastify";
 import { useCreateGroupChatMutation } from "../../features/chat/chatApiSlice";
+import { Spinner } from "react-bootstrap";
 
 const GroupForm = ({ handleClose = null }) => {
   const [groupName, setGroupName] = useState("");
@@ -34,13 +35,14 @@ const GroupForm = ({ handleClose = null }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!groupName) return;
+
     if (selectedUsers.length < 2) {
       toast.warning("2 Users are Required to Create a Group");
+      return;
     }
 
-    if (groupName && selectedUsers.length >= 2) {
-      await createGroupChat({ name: groupName, users: selectedUsers });
-    }
+    await createGroupChat({ name: groupName, users: selectedUsers });
   };
 
   const onChangedQuery = (e) => setQuery(e.target.value);
@@ -121,8 +123,15 @@ const GroupForm = ({ handleClose = null }) => {
         items={users}
         data={selectedUsers}
         setData={setSelectedUsers}
+        isLoading={isLoading}
       />
-      <button className="secondary-btn modal-btn">Create Group</button>
+      <button className="secondary-btn modal-btn" disabled={isLoading}>
+        {createGroupIsLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          "Create Group"
+        )}
+      </button>
     </form>
   );
 };

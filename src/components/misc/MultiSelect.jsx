@@ -2,8 +2,9 @@ import { toast } from "react-toastify";
 import "./misc.scss";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { Spinner } from "react-bootstrap";
 
-const MultiSelect = ({ items, data, setData }) => {
+const MultiSelect = ({ items, data, setData, isLoading }) => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectItem = (e) => {
@@ -72,7 +73,11 @@ const MultiSelect = ({ items, data, setData }) => {
         <SelectedItemsRender />
       </ul>
       <ul className="items-list">
-        <ItemRender />
+        {isLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          <ItemRender />
+        )}
       </ul>
     </>
   );

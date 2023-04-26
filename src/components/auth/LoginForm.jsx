@@ -14,9 +14,14 @@ import "./authForm.scss";
 
 //misc
 import { toast } from "react-toastify";
+import { Spinner } from "react-bootstrap";
+import { REGEX } from "../../data/regex";
 
-const ACCENTED_LETTER_REGEX =
-  /^[ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/g;
+const {
+  ACCENTED_LETTER_REGEX,
+  ACCENTED_LETTER_REGEX_WITH_SPECIAL_CHARACTER,
+  CONTAIN_A_SPECIAL_CHARACTER,
+} = REGEX;
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,12 +34,21 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const containsAccentedLetters =
-      ACCENTED_LETTER_REGEX.test(usernameRef.current.value) ||
-      ACCENTED_LETTER_REGEX.test(passwordRef.current.value);
+    const usernameNotContainsAccentedLetters = ACCENTED_LETTER_REGEX.test(
+      usernameRef.current.value
+    );
 
-    if (containsAccentedLetters) {
+    const passwordNotContainsAccentedLetters =
+      ACCENTED_LETTER_REGEX_WITH_SPECIAL_CHARACTER.test(
+        passwordRef.current.value
+      );
+
+    if (
+      !usernameNotContainsAccentedLetters ||
+      !passwordNotContainsAccentedLetters
+    ) {
       toast.warning("Username or Password is containing Accented Letters");
+      passwordRef.current.value = "";
       return;
     }
 
@@ -44,26 +58,26 @@ const LoginForm = () => {
     });
   };
 
-  const spaceDisAllowed = (e) => {
+  const spaceDisallowed = (e) => {
     if (e.code === "Space") e.preventDefault();
   };
 
+  const specialCharacterDisallowed = (e) => {
+    if (CONTAIN_A_SPECIAL_CHARACTER.test(e.key)) e.preventDefault();
+  };
+
   useEffect(() => {
-    if (isLoading) {
-      toast.loading("Loading...", { toastId: "loading" });
-    }
     if (isSuccess) {
-      toast.dismiss("loading");
       toast.success("Login Success");
+
       navigate("/dash", { replace: true });
     }
     if (isError) {
-      toast.dismiss("loading");
-      usernameRef.current.value = "";
+      passwordRef.current.value = "";
 
       toast.error("Username or password is incorrect");
     }
-  }, [isLoading, isSuccess, isError]);
+  }, [isSuccess, isError]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -75,8 +89,12 @@ const LoginForm = () => {
           name="username"
           ref={usernameRef}
           onKeyDown={(e) => {
-            spaceDisAllowed(e);
+            spaceDisallowed(e);
+            specialCharacterDisallowed(e);
           }}
+          onCopy={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
           required
           placeholder="Username"
         />
@@ -87,15 +105,22 @@ const LoginForm = () => {
           type="password"
           name="password"
           ref={passwordRef}
-          onKeyDown={(e) => {
-            spaceDisAllowed(e);
-          }}
+          onKeyDown={spaceDisallowed}
+          onCopy={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
           required
           placeholder="Password"
         />
       </div>
       <p>Forgot Password?</p>
-      <button className="primary-btn w-100">Sign In</button>
+      <button className="primary-btn w-100" disabled={isLoading}>
+        {isLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          "SIGN IN"
+        )}
+      </button>
     </form>
   );
 };

@@ -15,7 +15,10 @@ const Signup = () => {
           <SignupForm />
         </div>
         <p className="text-center">
-          Already have an account?&nbsp; <Link to="/">Sign in</Link>
+          Already have an account?&nbsp;{" "}
+          <Link to="/">
+            <b>Sign in</b>
+          </Link>
         </p>
       </div>
     </section>

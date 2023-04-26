@@ -4,6 +4,7 @@ import {
   useChangeGroupNameMutation,
 } from "../../features/chat/chatApiSlice";
 import { toast } from "react-toastify";
+import { Spinner } from "react-bootstrap";
 
 const EditGroupChat = ({ handleClose = "", formArg }) => {
   //Hooks and Props
@@ -12,7 +13,8 @@ const EditGroupChat = ({ handleClose = "", formArg }) => {
   const [groupName, setGroupName] = useState("");
 
   //Api
-  const [changeGroupName, { isSuccess }] = useChangeGroupNameMutation();
+  const [changeGroupName, { isSuccess, isLoading }] =
+    useChangeGroupNameMutation();
 
   const { chat } = useGetAllChatsQuery("chatsList", {
     selectFromResult: ({ data }) => ({
@@ -53,7 +55,13 @@ const EditGroupChat = ({ handleClose = "", formArg }) => {
           placeholder="Change your Group Name"
         />
       </div>
-      <button className="secondary-btn modal-btn">Change Group Name</button>
+      <button className="secondary-btn modal-btn" disabled={isLoading}>
+        {isLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          "SAVE CHANGES"
+        )}
+      </button>
     </form>
   );
 };

@@ -8,6 +8,7 @@ import {
   useAddUsersToGroupMutation,
 } from "../../features/chat/chatApiSlice";
 import { toast } from "react-toastify";
+import { Spinner } from "react-bootstrap";
 
 const GroupAddUsers = ({ handleClose = null, formArg }) => {
   const { chatId } = formArg;
@@ -24,7 +25,8 @@ const GroupAddUsers = ({ handleClose = null, formArg }) => {
     }),
   });
 
-  const [addUsersToGroup] = useAddUsersToGroupMutation();
+  const [addUsersToGroup, { isLoading: addIsLoading }] =
+    useAddUsersToGroupMutation();
 
   const [fetch, { data, isLoading, isSuccess, isError, error }] = useLazyAxios({
     url: endpoints.user + "/outside-group",
@@ -98,8 +100,15 @@ const GroupAddUsers = ({ handleClose = null, formArg }) => {
         items={users}
         data={selectedUsers}
         setData={setSelectedUsers}
+        isLoading={isLoading}
       />
-      <button className="secondary-btn modal-btn">Add Users</button>
+      <button className="secondary-btn modal-btn" disabled={addIsLoading}>
+        {addIsLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          "SAVE CHANGES"
+        )}
+      </button>
     </form>
   );
 };

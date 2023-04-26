@@ -13,14 +13,17 @@ const Login = () => {
           <p>Or</p>
           <button className="big-google-btn">
             <img src={Google} width={30} height={30} />
-            &nbsp; Sign in with google
+            &nbsp; SIGN IN WITH GOOGLE
           </button>
           <button className="small-google-btn">
             <img src={Google} width={30} height={30} />
           </button>
         </div>
         <p className="text-center">
-          Create an acount?&nbsp; <Link to="/signup">Signup</Link>
+          Create an acount?&nbsp;{" "}
+          <Link to="/signup">
+            <b>Signup</b>
+          </Link>
         </p>
       </div>
       <div className="img" style={{ backgroundImage: `url(${Social})` }}></div>

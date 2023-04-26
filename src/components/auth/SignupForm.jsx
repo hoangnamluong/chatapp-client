@@ -7,10 +7,15 @@ import "./authForm.scss";
 import { toast } from "react-toastify";
 import { useSignupMutation } from "../../features/auth/authApiSlice";
 import removeAccented from "../../utils/removeAccented";
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import { OverlayTrigger, Popover, Spinner } from "react-bootstrap";
 import { REGEX } from "../../data/regex";
 
-const { ACCENTED_LETTER_REGEX, STRONG_PASSWORD } = REGEX;
+const {
+  ACCENTED_LETTER_REGEX,
+  ACCENTED_LETTER_REGEX_WITH_SPECIAL_CHARACTER,
+  CONTAIN_A_SPECIAL_CHARACTER,
+  STRONG_PASSWORD,
+} = REGEX;
 
 const popover = (
   <Popover id="popover-basic">
@@ -81,12 +86,24 @@ const SignupForm = () => {
       return;
     }
 
-    const containsAccentedLetters =
-      ACCENTED_LETTER_REGEX.test(usernameRef.current.value) ||
-      ACCENTED_LETTER_REGEX.test(passwordRef.current.value);
+    const usernameNotContainsAccentedLetters = ACCENTED_LETTER_REGEX.test(
+      usernameRef.current.value
+    );
 
-    if (containsAccentedLetters) {
+    const passwordNotContainsAccentedLetters =
+      ACCENTED_LETTER_REGEX_WITH_SPECIAL_CHARACTER.test(
+        passwordRef.current.value
+      );
+
+    if (
+      !usernameNotContainsAccentedLetters ||
+      !passwordNotContainsAccentedLetters
+    ) {
       toast.warning("Username or Password is containing Accented Letters");
+
+      passwordRef.current.value = "";
+      confirmPasswordRef.current.value = "";
+
       return;
     }
 
@@ -119,10 +136,11 @@ const SignupForm = () => {
     if (e.code === "Space") e.preventDefault();
   };
 
+  const specialCharacterDisallowed = (e) => {
+    if (CONTAIN_A_SPECIAL_CHARACTER.test(e.key)) e.preventDefault();
+  };
+
   useEffect(() => {
-    if (isLoading) {
-      toast.loading("Loading...", { toastId: "loading" });
-    }
     if (isSuccess) {
       toast.dismiss("loading");
       toast.success("Signup Success");
@@ -132,7 +150,7 @@ const SignupForm = () => {
       toast.dismiss("loading");
       toast.error(error.data.message);
     }
-  }, [isLoading, isSuccess, isError]);
+  }, [isSuccess, isError]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -145,7 +163,11 @@ const SignupForm = () => {
           ref={usernameRef}
           onKeyDown={(e) => {
             spaceDisAllowed(e);
+            specialCharacterDisallowed(e);
           }}
+          onCopy={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
           required
           placeholder="Username"
         />
@@ -157,9 +179,10 @@ const SignupForm = () => {
             type="password"
             name="password"
             ref={passwordRef}
-            onKeyDown={(e) => {
-              spaceDisAllowed(e);
-            }}
+            onKeyDown={spaceDisAllowed}
+            onCopy={(e) => e.preventDefault()}
+            onPaste={(e) => e.preventDefault()}
+            onCut={(e) => e.preventDefault()}
             required
             placeholder="Password"
           />
@@ -171,6 +194,10 @@ const SignupForm = () => {
           type="password"
           name="confirm-password"
           ref={confirmPasswordRef}
+          onKeyDown={spaceDisAllowed}
+          onCopy={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
           required
           placeholder="Confirm password"
         />
@@ -185,8 +212,12 @@ const SignupForm = () => {
           onChange={(e) => postImage(e.target.files[0])}
         />
       </div>
-      <button disabled={loading} className="primary-btn w-100">
-        Sign Up
+      <button disabled={loading || isLoading} className="primary-btn w-100">
+        {loading || isLoading ? (
+          <Spinner style={{ width: "20px", height: "20px" }} />
+        ) : (
+          "SIGN UP"
+        )}
       </button>
     </form>
   );
