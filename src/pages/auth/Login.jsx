@@ -11,9 +11,12 @@ const Login = () => {
         <div>
           <LoginForm />
           <p>Or</p>
-          <button>
+          <button className="big-google-btn">
             <img src={Google} width={30} height={30} />
             &nbsp; Sign in with google
+          </button>
+          <button className="small-google-btn">
+            <img src={Google} width={30} height={30} />
           </button>
         </div>
         <p className="text-center">

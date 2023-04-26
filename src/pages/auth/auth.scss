@@ -53,6 +53,16 @@
         font-size: 1.2em;
       }
     }
+
+    .big-google-btn {
+      border: none;
+      outline: 1px solid #333;
+    }
+
+    .small-google-btn {
+      border: none;
+      outline: 1px solid #333;
+    }
   }
 
   .img {
@@ -81,5 +91,31 @@
 @media screen and (max-width: 991.98px) {
   .img {
     display: none;
+  }
+}
+
+@media screen and (min-width: 414px) {
+  .auth {
+    .auth-form {
+      .big-google-btn {
+        display: block;
+      }
+      .small-google-btn {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .auth {
+    .auth-form {
+      .big-google-btn {
+        display: none;
+      }
+      .small-google-btn {
+        display: block;
+      }
+    }
   }
 }
