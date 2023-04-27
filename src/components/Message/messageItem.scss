@@ -19,8 +19,8 @@
   gap: 10px;
 
   p {
-    color: $complementary;
-    background-color: #6e86ed;
+    color: $complementary !important;
+    background-color: $secondary;
   }
 }
 
@@ -33,7 +33,6 @@
     }
 
     p {
-      color: #333;
       font-size: 0.9em;
     }
   }
