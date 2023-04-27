@@ -63,6 +63,13 @@
         color: #555;
       }
 
+      p {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+
       &:hover {
         background-color: #ddd;
       }

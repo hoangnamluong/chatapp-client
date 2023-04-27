@@ -26,8 +26,6 @@ const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
 
     if (isLoading) return;
 
-    setMessage(message.trim());
-
     const messageSpaceOnly = message.replace(/\s/g, "").length;
 
     if (!message || !messageSpaceOnly) {
@@ -36,7 +34,7 @@ const ChatForm = ({ chatId, socket = null, setData, selectedChat }) => {
 
     fetch({
       chatId,
-      content: message,
+      content: message.trim().replace(/\s+/g, " "),
     });
 
     setMessage("");

@@ -1,24 +1,68 @@
 @import "../../assets/variables";
 
 .chat-box__logged-user {
-  display: flex;
-  align-items: center;
+  position: relative;
+  margin: 0 0 0 auto;
+  width: 60dvw;
+  display: grid;
+  grid-template-columns: auto 50px;
+  align-items: end;
   justify-content: right;
   gap: 10px;
+  z-index: 2;
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 30px;
+    height: 15px;
+    right: 50px;
+    bottom: 5px;
+    z-index: -1;
+    border-left: 2vh solid transparent;
+    border-right: 2vh solid transparent;
+    border-bottom: 2vh solid $primary;
+  }
 
   p {
+    max-width: 350px;
+    overflow: auto;
+    word-wrap: break-word;
+    white-space: break-spaces;
     color: $complementary !important;
     background-color: $primary;
   }
 }
 
 .chat-box__guest-user {
-  display: flex;
-  align-items: center;
+  position: relative;
+  margin: 0 auto 0 0;
+  width: 60dvw;
+  display: grid;
+  grid-template-columns: 40px auto;
+  align-items: end;
   justify-content: left;
   gap: 10px;
+  z-index: 2;
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 30px;
+    height: 15px;
+    left: 40px;
+    bottom: 5px;
+    z-index: -1;
+    border-left: 2vh solid transparent;
+    border-right: 2vh solid transparent;
+    border-bottom: 2vh solid $secondary;
+  }
 
   p {
+    max-width: 350px;
+    overflow: auto;
+    word-wrap: break-word;
+    white-space: break-spaces;
     color: $complementary !important;
     background-color: $secondary;
   }
